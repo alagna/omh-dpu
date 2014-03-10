@@ -1,0 +1,3 @@
+- far funzionare il controller
+- capire come registrare la DPU con l'engine
+- capire il formato dei dati JSON, come convertirli e come testarli, come comunicarli

@@ -1,0 +1,1 @@
+curl http://localhost:8080/dpu/omh/v1/blood_pressure
