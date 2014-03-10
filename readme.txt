@@ -1,7 +1,5 @@
-- far funzionare il controller
-
-GET http://localhost:8080/omh/dpu/v1/bloodPressure
-
-
+- descrivere i formati con concordia
 - capire come registrare la DPU con l'engine
-- capire il formato dei dati JSON, come convertirli e come testarli, come comunicarli
+
+- organizzare i package a 4 tier
+- togliere l'esempio Person

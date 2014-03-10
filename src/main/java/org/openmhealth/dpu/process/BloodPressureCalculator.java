@@ -1,8 +1,12 @@
 package org.openmhealth.dpu.process;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.NoArgsConstructor;
+
+import org.codehaus.jackson.map.ObjectMapper;
 import org.openmhealth.dpu.domain.SchemaIdVersion;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +23,22 @@ import org.springframework.stereotype.Service;
 public class BloodPressureCalculator implements DataProcessUnit {
 
 	public static final String processName="blood_pressure";
+
+	private ObjectMapper mapper = new ObjectMapper();
+
 	
 	/**
 	 * Converts the JSON input into the calculate() input and the calculate() output into JSON 
 	 */
 	public String process(String jsonInput, boolean preserveRawInputData) {
+		try {
+			BloodPressureMeasure measure = mapper.readValue(jsonInput, BloodPressureMeasure.class);
+			return mapper.writeValueAsString(new BloodPressureMeasureResult(calculate(measure)));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 
@@ -36,12 +51,6 @@ public class BloodPressureCalculator implements DataProcessUnit {
 
 	public enum BloodPressureCategory {
 		normal, prehypertension, high_blood_pressure_stage1, high_blood_pressure_stage2, hypertensive_crisis
-	}
-	
-	@lombok.Data
-	public class BloodPressureMeasure{
-		private int systolic;
-		private int diastolic;
 	}
 	
 	private BloodPressureCategory calculate(BloodPressureMeasure input){

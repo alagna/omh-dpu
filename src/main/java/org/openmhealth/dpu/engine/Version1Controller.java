@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * Controller for the DPU
  * 
- * @author alagna
+ * @author Alberto Lagna
  *
  */
 @Controller
