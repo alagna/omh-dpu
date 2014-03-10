@@ -1,5 +1,9 @@
 package org.openmhealth.dpu.process;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openmhealth.dpu.domain.SchemaIdVersion;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,25 +23,29 @@ public class BloodPressureCalculator implements DataProcessUnit {
 	/**
 	 * Converts the JSON input into the calculate() input and the calculate() output into JSON 
 	 */
-	public Data process(Data input, boolean preserveRawInputData) {
-		// TODO Auto-generated method stub
+	public String process(String jsonInput, boolean preserveRawInputData) {
 		return null;
 	}
 
 	/**
 	 * Forwards the call towards the registry
 	 */
-	public void registryRead() {
-		// TODO Auto-generated method stub
-		
+	public List<SchemaIdVersion> registryRead() {
+		return new ArrayList<>();
 	}
 
 	public enum BloodPressureCategory {
 		normal, prehypertension, high_blood_pressure_stage1, high_blood_pressure_stage2, hypertensive_crisis
 	}
 	
-	private BloodPressureCategory calculate(int systolic, int diastolic){
-		if (systolic<120 && diastolic<80)
+	@lombok.Data
+	public class BloodPressureMeasure{
+		private int systolic;
+		private int diastolic;
+	}
+	
+	private BloodPressureCategory calculate(BloodPressureMeasure input){
+		if (input.getSystolic()<120 && input.getDiastolic()<80)
 			return BloodPressureCategory.normal;
 		
 		return BloodPressureCategory.hypertensive_crisis;

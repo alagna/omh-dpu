@@ -1,5 +1,9 @@
 package org.openmhealth.dpu.process;
 
+import java.util.List;
+
+import org.openmhealth.dpu.domain.SchemaIdVersion;
+
 /**
  * DPU common interface
  * 
@@ -20,10 +24,10 @@ public interface DataProcessUnit {
 	 * The process endpoint must include support for a parameter that instructs it to preserve 
 	 * the original raw input data. 
 	 * 
-	 * @param input
+	 * @param jsonInput
 	 * @return
 	 */
-	public Data process(Data input, boolean preserveRawInputData);
+	public String process(String jsonInput, boolean preserveRawInputData);
 	
 	/**
 	 * Registry functions much like the DSU registry. 
@@ -31,6 +35,6 @@ public interface DataProcessUnit {
 	 * version pairs that are returned.
 	 * 
 	 */
-	public void registryRead();
+	public List<SchemaIdVersion> registryRead();
 
 }

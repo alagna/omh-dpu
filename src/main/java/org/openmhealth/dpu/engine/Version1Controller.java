@@ -1,13 +1,18 @@
 package org.openmhealth.dpu.engine;
 
+import java.util.List;
+
+import lombok.Setter;
+
 import org.apache.log4j.Logger;
 import org.openmhealth.dpu.domain.SchemaIdVersion;
+import org.openmhealth.dpu.process.BloodPressureCalculator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -19,6 +24,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(Version1Controller.PATH)
 public class Version1Controller {
+	
+	@Setter @Autowired
+	private BloodPressureCalculator bloodPressureCalculator;
 	
 	/**
 	 * Current version
@@ -54,24 +62,24 @@ public class Version1Controller {
 	private static Logger log = Logger.getLogger(Version1Controller.class);
 	
 	/**
-	 * Receives data that belongs to one schema ID-version pair and returns data 
-	 * that belongs to another schema ID-version pair
+	 * Receives input data and forwards them to the right DPU.
+	 * Returns the data received by the DPU.
 	 * 
-	 * @param model
+	 * @param input
 	 * @return
 	 */
 	@RequestMapping(
 		value = "process",
 		method = RequestMethod.POST)
 	@ResponseBody
-	public String process(@RequestBody String data) {
+	public String process(@RequestBody String input) {
 			
 		// TODO look for the right process and forwards the call to it 
 
 		// log.debug(processName+ "([" +schemaId + ":" + schemaVersion + "]\n" + data + "\n)");
-		log.debug(data);
+		log.debug(input);
 		
-		return data;
+		return input;
 	}
 
 	/**
@@ -85,14 +93,16 @@ public class Version1Controller {
 		value = "{" + PARAM_PROCESS_NAME + "}",
 		method = RequestMethod.GET)
 	@ResponseBody 		
-	public Object readRegistry(
+	public List<SchemaIdVersion> readRegistry(
 		@PathVariable(PARAM_PROCESS_NAME) final String processName) {
 		
-		// TODO look for the right process and forwards the call to it
+		log.debug("-> readRegistry (" + processName+ ")");
+
+		// TODO look for the right process and forward the call to it
+		List<SchemaIdVersion> res = bloodPressureCalculator.registryRead();
 		
-		log.debug("readRegistry (" + processName+ ")");
-		
-		return new SchemaIdVersion(processName, VERSION);
+		log.debug ("<- " + res);
+		return res;
 	}
 
 
