@@ -37,22 +37,6 @@ public class Version1Controller {
 	 * The root path for queries to this version of the API.
 	 */
 	public static final String PATH="/dpu/" + VERSION;
-	
-	/**
-	 * The parameter for the unique identifier for a schema. This is sometimes
-	 * used as part of the URI for the RESTful implementation.
-	 */
-	public static final String PARAM_SCHEMA_ID = "schema_id";
-	/**
-	 * The parameter for the version of a schema. This is sometimes used as
-	 * part of the URI for the RESTful implementation.
-	 */
-	public static final String PARAM_SCHEMA_VERSION = "schema_version";
-
-	/**
-	 * The parameter for the data when it is being uploaded.
-	 */
-	public static final String PARAM_DATA = "data";
 
 	/**
 	 * The parameter for the process name
@@ -69,17 +53,21 @@ public class Version1Controller {
 	 * @return
 	 */
 	@RequestMapping(
-		value = "process",
+		value = "{" + PARAM_PROCESS_NAME + "}",
 		method = RequestMethod.POST)
 	@ResponseBody
-	public String process(@RequestBody String input) {
-			
+	public String process(
+		@PathVariable(PARAM_PROCESS_NAME) final String processName,
+		@RequestBody String input) {
+
+		log.debug("IN " + processName + "(\n" + input + "\n)");
+
 		// TODO look for the right process and forwards the call to it 
 
-		// log.debug(processName+ "([" +schemaId + ":" + schemaVersion + "]\n" + data + "\n)");
-		log.debug(input);
-		
-		return input;
+		String res = bloodPressureCalculator.process(input, true);	
+		log.debug ("OUT " + res);
+
+		return res;
 	}
 
 	/**
@@ -96,12 +84,12 @@ public class Version1Controller {
 	public List<SchemaIdVersion> readRegistry(
 		@PathVariable(PARAM_PROCESS_NAME) final String processName) {
 		
-		log.debug("-> readRegistry (" + processName+ ")");
+		log.debug("IN readRegistry (" + processName+ ")");
 
 		// TODO look for the right process and forward the call to it
 		List<SchemaIdVersion> res = bloodPressureCalculator.registryRead();
 		
-		log.debug ("<- " + res);
+		log.debug ("OUT " + res);
 		return res;
 	}
 
