@@ -1,11 +1,10 @@
 package org.openmhealth.dpu.engine;
 
 import org.apache.log4j.Logger;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.openmhealth.dpu.domain.SchemaIdVersion;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,9 +21,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class Version1Controller {
 	
 	/**
+	 * Current version
+	 */
+	public static final String VERSION = "v1";
+	
+	/**
 	 * The root path for queries to this version of the API.
 	 */
-	public static final String PATH="/omh/v1";
+	public static final String PATH="/dpu/" + VERSION;
 	
 	/**
 	 * The parameter for the unique identifier for a schema. This is sometimes
@@ -57,17 +61,14 @@ public class Version1Controller {
 	 * @return
 	 */
 	@RequestMapping(
-		value =
-			"{" + PARAM_PROCESS_NAME + "}",
-		method = RequestMethod.POST,
-		headers = "Accept=application/json")
-	public @ResponseBody Object process(
-		@PathVariable(PARAM_PROCESS_NAME) final String processName,
-//		@RequestParam(value=PARAM_SCHEMA_ID) final String schemaId,
-//		@RequestParam(value=PARAM_SCHEMA_VERSION) final String schemaVersion,
-		@RequestParam(value = PARAM_DATA) final String data) {
-		
-//		log.debug(processName+ "([" +schemaId + ":" + schemaVersion + "]\n" + data + "\n)");
+		value = "process",
+		method = RequestMethod.POST)
+	@ResponseBody
+	public String process(@RequestBody String data) {
+			
+		// TODO look for the right process and forwards the call to it 
+
+		// log.debug(processName+ "([" +schemaId + ":" + schemaVersion + "]\n" + data + "\n)");
 		log.debug(data);
 		
 		return data;
@@ -84,12 +85,14 @@ public class Version1Controller {
 		value = "{" + PARAM_PROCESS_NAME + "}",
 		method = RequestMethod.GET)
 	@ResponseBody 		
-	public String readRegistry(
+	public Object readRegistry(
 		@PathVariable(PARAM_PROCESS_NAME) final String processName) {
+		
+		// TODO look for the right process and forwards the call to it
 		
 		log.debug("readRegistry (" + processName+ ")");
 		
-		return processName;
+		return new SchemaIdVersion(processName, VERSION);
 	}
 
 

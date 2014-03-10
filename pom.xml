@@ -104,7 +104,7 @@
 					<scanIntervalSeconds>10</scanIntervalSeconds>
 					<webApp>
 						<war>${basedir}/target/dpu-${project.version}.war</war>
-						<contextPath>/dpu</contextPath>
+						<contextPath>/omh</contextPath>
 					</webApp>
 				</configuration>
 			</plugin>
