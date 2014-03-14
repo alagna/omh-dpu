@@ -1,4 +1,4 @@
-package org.openmhealth.dpu.domain;
+package org.openmhealth.dpu.process;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -3,7 +3,6 @@ package org.openmhealth.dpu.process;
 import java.util.List;
 
 import org.openmhealth.dpu.process.exception.SystemException;
-import org.openmhealth.dpu.domain.SchemaIdVersion;
 import org.openmhealth.dpu.process.exception.BusinessException;
 
 /**

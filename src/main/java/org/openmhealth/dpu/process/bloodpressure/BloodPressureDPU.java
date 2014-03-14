@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.openmhealth.dpu.domain.SchemaIdVersion;
 import org.openmhealth.dpu.process.DataProcessUnit;
 import org.openmhealth.dpu.process.DataProcessUnitBaseImpl;
+import org.openmhealth.dpu.process.SchemaIdVersion;
 import org.openmhealth.dpu.process.exception.BusinessException;
 import org.openmhealth.dpu.process.exception.SystemException;
 import org.springframework.stereotype.Service;

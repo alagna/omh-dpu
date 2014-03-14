@@ -1,15 +1,11 @@
 package org.openmhealth.dpu.controller;
 
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 
 import lombok.Setter;
 
 import org.apache.log4j.Logger;
-import org.openmhealth.dpu.domain.SchemaIdVersion;
 import org.openmhealth.dpu.process.DataProcessUnit;
-import org.openmhealth.dpu.process.bloodpressure.BloodPressureDPU;
 import org.openmhealth.dpu.process.exception.BusinessException;
 import org.openmhealth.dpu.process.exception.SystemException;
 import org.springframework.beans.BeansException;
@@ -32,8 +28,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(DataProcessUnitController.PATH)
 public class DataProcessUnitController {
 	
-//	@Setter @Autowired
-//	private BloodPressureDPU bloodPressureCalculator;
 	@Setter @Autowired
 	private ApplicationContext applicationContext;
 	
