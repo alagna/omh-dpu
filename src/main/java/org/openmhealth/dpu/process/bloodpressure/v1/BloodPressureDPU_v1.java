@@ -1,17 +1,14 @@
 package org.openmhealth.dpu.process.bloodpressure.v1;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.openmhealth.dpu.process.exception.SystemException;
 import org.openmhealth.dpu.domain.SchemaIdVersion;
 import org.openmhealth.dpu.process.DataProcessUnit;
+import org.openmhealth.dpu.process.DataProcessUnitBaseImpl;
 import org.openmhealth.dpu.process.exception.BusinessException;
+import org.openmhealth.dpu.process.exception.SystemException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,13 +21,9 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class BloodPressureDPU_v1 implements DataProcessUnit {
+public class BloodPressureDPU_v1 extends DataProcessUnitBaseImpl implements DataProcessUnit {
 
-	public static final String processName="blood_pressure";
-
-	private ObjectMapper mapper = new ObjectMapper();
 	private static final Logger log = Logger.getLogger(BloodPressureDPU_v1.class);
-
 	
 	/**
 	 * Converts the JSON input into the calculate() input and the calculate() output into JSON.
@@ -38,30 +31,15 @@ public class BloodPressureDPU_v1 implements DataProcessUnit {
 	 */
 	public String process(String jsonInput, boolean preserveRawInputData) 
 		throws BusinessException, SystemException {
-		
-		BloodPressureMeasure_v1 measure;
-		
+
 		// unmarshalling the input JSON string into the target object
-		try {
-			measure = mapper.readValue(jsonInput, BloodPressureMeasure_v1.class);
-		} catch (JsonParseException e) {
-			throw new BusinessException(BusinessException.JSON_NOT_WELL_FORMED, e, log, jsonInput);		
-		} catch (JsonMappingException e) {
-			throw new BusinessException(BusinessException.JSON_MAPPING_ERROR, e, log, jsonInput, BloodPressureMeasure_v1.class);		
-		} catch (IOException e) {
-			// It should never happen, but you never know
-			throw new SystemException(SystemException.UNABLE_TO_READ_INPUT, e, log, jsonInput);		
-		}
+		BloodPressureMeasure_v1 measure = (BloodPressureMeasure_v1)unmarshllProcessInput(jsonInput, preserveRawInputData, BloodPressureMeasure_v1.class);
 		
 		// calculating the result
 		BloodPressureCategoryWrapper_v1 res = new BloodPressureCategoryWrapper_v1(calculate(measure));
 		
 		// Marshalling the result into a JSON string
-		try {
-			return mapper.writeValueAsString(res);
-		} catch (IOException e) {
-			throw new SystemException(SystemException.MARSHALL_ERROR, e, log, jsonInput);
-		}
+		return marshallProcessOutput(res);
 	}
 
 	/**

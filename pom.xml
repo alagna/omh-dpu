@@ -119,7 +119,7 @@
 					<scanIntervalSeconds>10</scanIntervalSeconds>
 					<webApp>
 						<war>${basedir}/target/dpu-${project.version}.war</war>
-						<contextPath>/omh-engine</contextPath>
+						<contextPath>/omh-engine-${project.version}</contextPath>
 					</webApp>
 				</configuration>
 			</plugin>
