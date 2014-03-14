@@ -12,7 +12,9 @@ import org.openmhealth.dpu.process.DataProcessUnit;
 import org.openmhealth.dpu.process.bloodpressure.BloodPressureDPU;
 import org.openmhealth.dpu.process.exception.BusinessException;
 import org.openmhealth.dpu.process.exception.SystemException;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,8 +32,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(DataProcessUnitController.PATH)
 public class DataProcessUnitController {
 	
+//	@Setter @Autowired
+//	private BloodPressureDPU bloodPressureCalculator;
 	@Setter @Autowired
-	private BloodPressureDPU bloodPressureCalculator;
+	private ApplicationContext applicationContext;
 	
 	/**
 	 * Add here all configuration info you want to show at startup
@@ -71,11 +75,9 @@ public class DataProcessUnitController {
 		log.debug("+---------------------------");
 		log.debug("| " + processName + "(\n" + input + "\n)");
 
-		// TODO look for the right DPU (depending on the process name)
-
 		String res;
 		try {
-			res = bloodPressureCalculator.process(input, true);
+			res = getDPU(processName).process(input, true);
 			log.debug ("| response" + res);
 			log.debug("+---------------------------");
 		} catch (BusinessException | SystemException e) {
@@ -83,7 +85,6 @@ public class DataProcessUnitController {
 			log.debug ("| error" + res);
 			log.debug("+---------------------------");
 		}	
-
 		return res;
 	}
 
@@ -98,27 +99,38 @@ public class DataProcessUnitController {
 		value = "{" + PARAM_PROCESS_NAME + "}",
 		method = RequestMethod.GET)
 	@ResponseBody 		
-	public List<SchemaIdVersion> readRegistry(
+	public String readRegistry(
 		@PathVariable(PARAM_PROCESS_NAME) final String processName) {
 		
 		log.debug("IN readRegistry (" + processName+ ")");
 
-		// TODO look for the right process and forward the call to it
-		List<SchemaIdVersion> res = bloodPressureCalculator.registryRead();
-		
-		log.debug ("OUT " + res);
+		String res;
+		try {
+			res = getDPU(processName).registryRead();
+			log.debug ("| response" + res);
+			log.debug("+---------------------------");
+		} catch (BusinessException | SystemException e) {
+			res = e.getJsonString();
+			log.debug ("| error" + res);
+			log.debug("+---------------------------");
+		}	
 		return res;
 	}
 	
 	
 	/**
-	 * Gives the right DPU, given the process name
+	 * Gives the right DPU, given the process name.
+	 * The DPU have the following naming convention:
+	 * DPU name = <process name camel case> + "DPU"
 	 * 
 	 * @param processname
 	 */
-	private DataProcessUnit getDPU(String processname){
-		// gets all the DPUs
-		return null;
+	private DataProcessUnit getDPU(String processname) throws BusinessException {
+		try {
+			return (DataProcessUnit)applicationContext.getBean(processname+"DPU");
+		} catch (BeansException be) {
+			throw new BusinessException(BusinessException.NO_SUCH_PROCESS, be, log, processname);
+		}
 	}
 
 

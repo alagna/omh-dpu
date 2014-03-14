@@ -23,6 +23,15 @@ public class DataProcessUnitControllerTest {
 	private DataProcessUnitController controller;
 	
 	/**
+	 * Tests the process method of an unexistent DPU
+	 */
+	@Test
+	public void testProcessUnexistentProcess() {
+		assertTrue(controller.process("foo", "{\"systoli\":100, \"diastolic\":99}").
+			contains("The process foo is undefined"));
+	}
+
+	/**
 	 * Tests the process method with the right input
 	 */
 	@Test
@@ -41,7 +50,7 @@ public class DataProcessUnitControllerTest {
 	}
 	
 	/**
-	 * Tests the process method a JSON that cannot be unmarshalled into domain classes
+	 * Tests the process method with a JSON that cannot be unmarshalled into domain classes
 	 */
 	@Test
 	public void testProcessJSONWrongMapping() {
@@ -49,5 +58,20 @@ public class DataProcessUnitControllerTest {
 			contains("json mapping error"));
 	}
 
+	/**
+	 * Tests the registryRead method of an unexistent DPU
+	 */
+	@Test
+	public void testRegistryReadUnexistentProcess() {
+		assertTrue(controller.readRegistry("foo").contains("The process foo is undefined"));
+	}
+	
+	/**
+	 * Tests the registryRead method of an unexistent DPU
+	 */
+	@Test
+	public void testRegistryReadOk() {
+		assertFalse(controller.readRegistry("bloodPressure").contains("error"));
+	}
 
 }

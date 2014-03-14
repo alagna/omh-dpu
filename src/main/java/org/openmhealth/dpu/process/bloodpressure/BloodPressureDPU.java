@@ -45,13 +45,16 @@ public class BloodPressureDPU extends DataProcessUnitBaseImpl implements DataPro
 	/**
 	 * Returns the schema id and version of the input and output.
 	 * No error management is needed because the method is trivial.
+	 * @throws SystemException 
 	 */
-	public List<SchemaIdVersion> registryRead() {
+	public String registryRead() throws SystemException {
+		// calculating the result
 		List<SchemaIdVersion> schemaIdVersions = new ArrayList<>();
 		schemaIdVersions.add(new SchemaIdVersion("omh:dpu:bloodpressure", "1"));
 		schemaIdVersions.add(new SchemaIdVersion("omh:dpu:bloodpressure", "1"));
-		
-		return schemaIdVersions;
+
+		// Marshalling the result into a JSON string
+		return marshallProcessOutput(schemaIdVersions);
 	}
 
 	

@@ -37,8 +37,9 @@ public interface DataProcessUnit {
 	 * Registry functions much like the DSU registry. 
 	 * It returns the schema ID-version pairs that can be processed and the schema-ID 
 	 * version pairs that are returned.
+	 * @throws SystemException 
 	 * 
 	 */
-	public List<SchemaIdVersion> registryRead();
+	public String registryRead() throws SystemException;
 
 }
