@@ -1,0 +1,19 @@
+{
+	"type": "object",
+	"fields": [
+		{
+			"name": "SystemException",
+			"type": "object",
+			"fields": [
+				{
+					"name": "code",
+					"type": "string"
+				},
+				{
+					"name": "message",
+					"type": "string"
+				}
+			]
+		}
+	]
+}

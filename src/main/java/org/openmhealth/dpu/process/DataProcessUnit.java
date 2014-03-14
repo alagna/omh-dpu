@@ -2,7 +2,9 @@ package org.openmhealth.dpu.process;
 
 import java.util.List;
 
+import org.openmhealth.dpu.process.exception.SystemException;
 import org.openmhealth.dpu.domain.SchemaIdVersion;
+import org.openmhealth.dpu.process.exception.BusinessException;
 
 /**
  * DPU common interface
@@ -26,8 +28,10 @@ public interface DataProcessUnit {
 	 * 
 	 * @param jsonInput
 	 * @return
+	 * @throws SystemException 
+	 * @throws BusinessException 
 	 */
-	public String process(String jsonInput, boolean preserveRawInputData);
+	public String process(String jsonInput, boolean preserveRawInputData) throws BusinessException, SystemException;
 	
 	/**
 	 * Registry functions much like the DSU registry. 

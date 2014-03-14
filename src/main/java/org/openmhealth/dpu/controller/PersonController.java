@@ -1,4 +1,4 @@
-package org.openmhealth.dpu.engine;
+package org.openmhealth.dpu.controller;
 
 import org.openmhealth.dpu.domain.Person;
 import org.openmhealth.dpu.process.PersonService;

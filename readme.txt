@@ -1,5 +1,6 @@
-- descrivere i formati con concordia
+- gestire gli errori con le eccezioni e sollevare l'errore HTTP opportuno
+- validare l'input con concordia
 - capire come registrare la DPU con l'engine
 
-- organizzare i package a 4 tier
 - togliere l'esempio Person
+- documentare

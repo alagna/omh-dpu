@@ -1,4 +1,4 @@
-package org.openmhealth.dpu.engine;
+package org.openmhealth.dpu.controller;
 
 import java.util.List;
 
@@ -6,7 +6,9 @@ import lombok.Setter;
 
 import org.apache.log4j.Logger;
 import org.openmhealth.dpu.domain.SchemaIdVersion;
-import org.openmhealth.dpu.process.BloodPressureCalculator;
+import org.openmhealth.dpu.process.bloodpressure.v1.BloodPressureDPU_v1;
+import org.openmhealth.dpu.process.exception.BusinessException;
+import org.openmhealth.dpu.process.exception.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,31 +24,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  */
 @Controller
-@RequestMapping(Version1Controller.PATH)
-public class Version1Controller {
+@RequestMapping(DataProcessUnitController.PATH)
+public class DataProcessUnitController {
 	
 	@Setter @Autowired
-	private BloodPressureCalculator bloodPressureCalculator;
+	private BloodPressureDPU_v1 bloodPressureCalculator;
 	
 	/**
-	 * Current version
+	 * The root path for queries to the DPU controller.
 	 */
-	public static final String VERSION = "v1";
-	
-	/**
-	 * The root path for queries to this version of the API.
-	 */
-	public static final String PATH="/dpu/" + VERSION;
+	public static final String PATH="/dpu";
 
 	/**
 	 * The parameter for the process name
 	 */
 	private static final String PARAM_PROCESS_NAME = "processName";
 
-	private static Logger log = Logger.getLogger(Version1Controller.class);
+	private static Logger log = Logger.getLogger(DataProcessUnitController.class);
 	
 	/**
-	 * Receives input data and forwards them to the right DPU.
+	 * Receives input data and forwards them to the right DPU (depending on the process name).
 	 * Returns the data received by the DPU.
 	 * 
 	 * @param input
@@ -60,12 +57,22 @@ public class Version1Controller {
 		@PathVariable(PARAM_PROCESS_NAME) final String processName,
 		@RequestBody String input) {
 
-		log.debug("IN " + processName + "(\n" + input + "\n)");
+		log.debug("+---------------------------");
+		log.debug("| " + processName + "(\n" + input + "\n)");
 
-		// TODO look for the right process and forwards the call to it 
+		// TODO look for the right DPU (depending on the process name)
+		// TODO validating the input using the concordia definition of the process
 
-		String res = bloodPressureCalculator.process(input, true);	
-		log.debug ("OUT " + res);
+		String res;
+		try {
+			res = bloodPressureCalculator.process(input, true);
+			log.debug ("| response" + res);
+			log.debug("+---------------------------");
+		} catch (BusinessException | SystemException e) {
+			res = e.getJsonString();
+			log.debug ("| error" + res);
+			log.debug("+---------------------------");
+		}	
 
 		return res;
 	}

@@ -1,0 +1,14 @@
+{
+	"type": "object",
+	"fields": [
+		{
+			"name": "systolic",
+			"type": "number"
+		},
+		{
+			"name": "diastolic",
+			"type": "number"
+		}
+		
+	]
+}    
