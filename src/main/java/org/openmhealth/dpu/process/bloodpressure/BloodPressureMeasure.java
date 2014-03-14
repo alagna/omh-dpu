@@ -1,4 +1,4 @@
-package org.openmhealth.dpu.process.bloodpressure.v1;
+package org.openmhealth.dpu.process.bloodpressure;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  *
  */
 @Data @NoArgsConstructor
-public class BloodPressureMeasure_v1{
+public class BloodPressureMeasure{
 	private int systolic;
 	private int diastolic;
 }

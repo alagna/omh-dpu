@@ -1,4 +1,4 @@
-package org.openmhealth.dpu.process.bloodpressure.v1;
+package org.openmhealth.dpu.process.bloodpressure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +21,9 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-public class BloodPressureDPU_v1 extends DataProcessUnitBaseImpl implements DataProcessUnit {
+public class BloodPressureDPU extends DataProcessUnitBaseImpl implements DataProcessUnit {
 
-	private static final Logger log = Logger.getLogger(BloodPressureDPU_v1.class);
+	private static final Logger log = Logger.getLogger(BloodPressureDPU.class);
 	
 	/**
 	 * Converts the JSON input into the calculate() input and the calculate() output into JSON.
@@ -33,10 +33,10 @@ public class BloodPressureDPU_v1 extends DataProcessUnitBaseImpl implements Data
 		throws BusinessException, SystemException {
 
 		// unmarshalling the input JSON string into the target object
-		BloodPressureMeasure_v1 measure = (BloodPressureMeasure_v1)unmarshllProcessInput(jsonInput, preserveRawInputData, BloodPressureMeasure_v1.class);
+		BloodPressureMeasure measure = (BloodPressureMeasure)unmarshllProcessInput(jsonInput, preserveRawInputData, BloodPressureMeasure.class);
 		
 		// calculating the result
-		BloodPressureCategoryWrapper_v1 res = new BloodPressureCategoryWrapper_v1(calculate(measure));
+		BloodPressureCategoryWrapper res = new BloodPressureCategoryWrapper(calculate(measure));
 		
 		// Marshalling the result into a JSON string
 		return marshallProcessOutput(res);
@@ -62,21 +62,21 @@ public class BloodPressureDPU_v1 extends DataProcessUnitBaseImpl implements Data
 	 * @param input
 	 * @return
 	 */
-	private BloodPressureCategory_v1 calculate(BloodPressureMeasure_v1 input) 
+	private BloodPressureCategory calculate(BloodPressureMeasure input) 
 		throws BusinessException{
 		if (input.getSystolic()<120 && input.getDiastolic()<80)
-			return BloodPressureCategory_v1.normal;
+			return BloodPressureCategory.normal;
 		if ((input.getSystolic()>=120 && input.getSystolic()<=139) ||
 			(input.getDiastolic()>=80 && input.getDiastolic()<=89))
-			return BloodPressureCategory_v1.prehypertension;
+			return BloodPressureCategory.prehypertension;
 		if ((input.getSystolic()>=140 && input.getSystolic()<=159) ||
 			(input.getDiastolic()>=90 && input.getDiastolic()<=99))
-			return BloodPressureCategory_v1.high_blood_pressure_stage1;
+			return BloodPressureCategory.high_blood_pressure_stage1;
 		if ((input.getSystolic()>=160 && input.getSystolic()<=180) ||
 				(input.getDiastolic()>=100 && input.getDiastolic()<=110))
-			return BloodPressureCategory_v1.high_blood_pressure_stage2;
+			return BloodPressureCategory.high_blood_pressure_stage2;
 		if ((input.getSystolic()>180) || (input.getDiastolic()>110))
-			return BloodPressureCategory_v1.hypertensive_crisis;
+			return BloodPressureCategory.hypertensive_crisis;
 
 		throw new BusinessException(BusinessException.INVALID_INPUT, null, log, 
 			" the systolic " + input.getSystolic() + 

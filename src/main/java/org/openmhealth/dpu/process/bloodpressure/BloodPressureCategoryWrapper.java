@@ -1,4 +1,4 @@
-package org.openmhealth.dpu.process.bloodpressure.v1;
+package org.openmhealth.dpu.process.bloodpressure;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
  *
  */
 @Data @AllArgsConstructor @NoArgsConstructor
-public class BloodPressureCategoryWrapper_v1 {
-	private BloodPressureCategory_v1 category;
+public class BloodPressureCategoryWrapper {
+	private BloodPressureCategory category;
 }

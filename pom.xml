@@ -13,6 +13,7 @@
 		<slf4j.version>1.7.2</slf4j.version>
 		<jackson.version>1.9.11</jackson.version>
 		<lombok.version>1.12.6</lombok.version>
+		<javax.servlet.version>3.0.1</javax.servlet.version>
 	</properties>
 
 	<dependencies>
@@ -49,6 +50,13 @@
 			<artifactId>spring-web</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -83,6 +91,13 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet.version}</version>
 			<scope>test</scope>
 		</dependency>
 

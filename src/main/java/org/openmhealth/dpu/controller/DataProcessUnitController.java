@@ -8,7 +8,8 @@ import lombok.Setter;
 
 import org.apache.log4j.Logger;
 import org.openmhealth.dpu.domain.SchemaIdVersion;
-import org.openmhealth.dpu.process.bloodpressure.v1.BloodPressureDPU_v1;
+import org.openmhealth.dpu.process.DataProcessUnit;
+import org.openmhealth.dpu.process.bloodpressure.BloodPressureDPU;
 import org.openmhealth.dpu.process.exception.BusinessException;
 import org.openmhealth.dpu.process.exception.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class DataProcessUnitController {
 	
 	@Setter @Autowired
-	private BloodPressureDPU_v1 bloodPressureCalculator;
+	private BloodPressureDPU bloodPressureCalculator;
 	
 	/**
 	 * Add here all configuration info you want to show at startup
@@ -107,6 +108,17 @@ public class DataProcessUnitController {
 		
 		log.debug ("OUT " + res);
 		return res;
+	}
+	
+	
+	/**
+	 * Gives the right DPU, given the process name
+	 * 
+	 * @param processname
+	 */
+	private DataProcessUnit getDPU(String processname){
+		// gets all the DPUs
+		return null;
 	}
 
 
