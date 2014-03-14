@@ -71,7 +71,6 @@ public class DataProcessUnitController {
 		log.debug("| " + processName + "(\n" + input + "\n)");
 
 		// TODO look for the right DPU (depending on the process name)
-		// TODO validating the input using the concordia definition of the process
 
 		String res;
 		try {
