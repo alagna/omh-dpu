@@ -2,6 +2,8 @@ package org.openmhealth.dpu.controller;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import lombok.Setter;
 
 import org.apache.log4j.Logger;
@@ -29,6 +31,14 @@ public class DataProcessUnitController {
 	
 	@Setter @Autowired
 	private BloodPressureDPU_v1 bloodPressureCalculator;
+	
+	/**
+	 * Add here all configuration info you want to show at startup
+	 */
+	@PostConstruct
+	public void init(){
+		log.debug("DPU engine is ready");
+	}
 	
 	/**
 	 * The root path for queries to the DPU controller.

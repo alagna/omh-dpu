@@ -28,7 +28,7 @@ public abstract class BaseException extends Exception {
 	/**
 	 * If the error has to be returned to the user, the HttpStatus to use.
 	 * TODO a possible extension could be to customize the status, depending on the error code
-	 * @see http://stackoverflow.com/questions/16232833/how-to-respond-with-http-400-error-in-a-spring-mvc-responsebody-method-returnin
+	 * http://stackoverflow.com/questions/16232833/how-to-respond-with-http-400-error-in-a-spring-mvc-responsebody-method-returnin
 	 */
 	@Getter
 	protected HttpStatus httpStatus=HttpStatus.INTERNAL_SERVER_ERROR;
@@ -46,7 +46,10 @@ public abstract class BaseException extends Exception {
 		// (for the time being) I trust people writing error dictionary in the proper way
 		super(MessageFormat.format(errorDescription[1], args));
 		code=errorDescription[0];
-		log.error(getMessage());
+		if (thrownBy!=null)
+			log.error(getMessage(), thrownBy);
+		else
+			log.error(getMessage());
 	}
 	
 	/**

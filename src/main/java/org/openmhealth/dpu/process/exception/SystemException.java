@@ -17,6 +17,7 @@ public class SystemException extends BaseException {
 	// Error dictionary
 	public static final String UNMARSHALL_ERROR[]={"unmarshall error", "Unable to convert string into JSON object:{0}"};
 	public static final String MARSHALL_ERROR[] = {"marshall error", "Unable to convert JSON object into string:{0}"};
+	public static final String[] UNABLE_TO_READ_INPUT = {"unable to read input", "Unable to read an input source:{0}"};;
 	
 	public SystemException(String errorDescription[], Exception thrownBy, Logger log, Object ... args) {
 		super(errorDescription, thrownBy, log, args);

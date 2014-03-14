@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.openmhealth.dpu.process.exception.SystemException;
 import org.openmhealth.dpu.domain.SchemaIdVersion;
@@ -31,28 +33,40 @@ public class BloodPressureDPU_v1 implements DataProcessUnit {
 
 	
 	/**
-	 * Converts the JSON input into the calculate() input and the calculate() output into JSON 
+	 * Converts the JSON input into the calculate() input and the calculate() output into JSON.
+	 * The error management is an important part of the method.
 	 */
 	public String process(String jsonInput, boolean preserveRawInputData) 
 		throws BusinessException, SystemException {
 		
 		BloodPressureMeasure_v1 measure;
 		
+		// unmarshalling the input JSON string into the target object
 		try {
 			measure = mapper.readValue(jsonInput, BloodPressureMeasure_v1.class);
+		} catch (JsonParseException e) {
+			throw new BusinessException(BusinessException.JSON_NOT_WELL_FORMED, e, log, jsonInput);		
+		} catch (JsonMappingException e) {
+			throw new BusinessException(BusinessException.JSON_MAPPING_ERROR, e, log, jsonInput, BloodPressureMeasure_v1.class);		
 		} catch (IOException e) {
-			throw new SystemException(SystemException.UNMARSHALL_ERROR, e, log, jsonInput);
+			// It should never happen, but you never know
+			throw new SystemException(SystemException.UNABLE_TO_READ_INPUT, e, log, jsonInput);		
 		}
 		
+		// calculating the result
+		BloodPressureCategoryWrapper_v1 res = new BloodPressureCategoryWrapper_v1(calculate(measure));
+		
+		// Marshalling the result into a JSON string
 		try {
-			return mapper.writeValueAsString(new BloodPressureCategoryWrapper_v1(calculate(measure)));
+			return mapper.writeValueAsString(res);
 		} catch (IOException e) {
 			throw new SystemException(SystemException.MARSHALL_ERROR, e, log, jsonInput);
 		}
 	}
 
 	/**
-	 * Returns the schema id and version of the input and output
+	 * Returns the schema id and version of the input and output.
+	 * No error management is needed because the method is trivial.
 	 */
 	public List<SchemaIdVersion> registryRead() {
 		List<SchemaIdVersion> schemaIdVersions = new ArrayList<>();
@@ -75,8 +89,7 @@ public class BloodPressureDPU_v1 implements DataProcessUnit {
 		if (input.getSystolic()<120 && input.getDiastolic()<80)
 			return BloodPressureCategory_v1.normal;
 		if ((input.getSystolic()>=120 && input.getSystolic()<=139) ||
-			// FIXME correct the error I put to be able to get an exception
-			(input.getDiastolic()>=85 && input.getDiastolic()<=89))
+			(input.getDiastolic()>=80 && input.getDiastolic()<=89))
 			return BloodPressureCategory_v1.prehypertension;
 		if ((input.getSystolic()>=140 && input.getSystolic()<=159) ||
 			(input.getDiastolic()>=90 && input.getDiastolic()<=99))

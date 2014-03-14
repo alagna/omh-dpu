@@ -15,6 +15,8 @@ public class BusinessException extends BaseException {
 	
 	// error dictionary
 	public static final String INVALID_INPUT[] = {"invalid input", "invalid input parameter: {0}"};
+	public static final String[] JSON_NOT_WELL_FORMED = {"json not well formed", "the json input is not well formed: {0}"};
+	public static final String[] JSON_MAPPING_ERROR = {"json mapping error", "the json parser was not able to unmarshall the json string into the given domain class({1}): {0}"};;
 	
 	public BusinessException(String errorDescription[], Exception thrownBy, Logger log, Object ... args) {
 		super(errorDescription, thrownBy, log, args);
