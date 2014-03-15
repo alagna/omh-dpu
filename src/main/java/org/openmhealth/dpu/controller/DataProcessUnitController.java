@@ -19,7 +19,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Controller for the DPU
+ * It is the access point to the DPUs. 
+ * It exposes a REST interface with the two DPU methods. 
+ * Given the <process name> of the requests dynamically looks for DPUs and forwards 
+ * the JSON call to them. 
+ * 
+ * It catches the exception thrown by the engine and converts them into the proper 
+ * error message and HTTP code.
+ * 
+ * It also logs requests and responses for better tracing and debugging
  * 
  * @author Alberto Lagna
  *

@@ -4,7 +4,7 @@
   <class id="1" language="java" name="org.openmhealth.dpu.controller.DataProcessUnitController" project="dpu" 
     file="/dpu/src/main/java/org/openmhealth/dpu/controller/DataProcessUnitController.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="286" y="245"/>    
+    <position height="-1" width="-1" x="166" y="118"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -13,7 +13,7 @@
   </class>  
   <interface id="2" language="java" name="org.openmhealth.dpu.process.DataProcessUnit" project="dpu" 
     file="/dpu/src/main/java/org/openmhealth/dpu/process/DataProcessUnit.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="293" y="425"/>    
+    <position height="-1" width="-1" x="173" y="298"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -23,7 +23,7 @@
   <class id="3" language="java" name="org.openmhealth.dpu.process.DataProcessUnitBaseImpl" project="dpu" 
     file="/dpu/src/main/java/org/openmhealth/dpu/process/DataProcessUnitBaseImpl.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="755" y="193"/>    
+    <position height="-1" width="-1" x="632" y="120"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -33,7 +33,7 @@
   <class id="4" language="java" name="org.openmhealth.dpu.process.bloodpressure.BloodPressureDPU" project="dpu" 
     file="/dpu/src/main/java/org/openmhealth/dpu/process/bloodpressure/BloodPressureDPU.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="752" y="422"/>    
+    <position height="-1" width="-1" x="632" y="295"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -43,7 +43,7 @@
   <enumeration id="5" language="java" name="org.openmhealth.dpu.process.bloodpressure.BloodPressureCategory" 
     project="dpu" file="/dpu/src/main/java/org/openmhealth/dpu/process/bloodpressure/BloodPressureCategory.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1100" y="313"/>    
+    <position height="-1" width="-1" x="980" y="186"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
@@ -53,32 +53,78 @@
   <class id="6" language="java" name="org.openmhealth.dpu.process.bloodpressure.BloodPressureMeasure" project="dpu" 
     file="/dpu/src/main/java/org/openmhealth/dpu/process/bloodpressure/BloodPressureMeasure.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1098" y="457"/>    
+    <position height="-1" width="-1" x="978" y="330"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="false"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <realization id="7">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="2"/>  
-  </realization>  
-  <dependency id="8">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="5"/>  
-  </dependency>  
-  <generalization id="9">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
+  <class id="7" language="java" name="org.openmhealth.dpu.process.exception.BusinessException" project="dpu" 
+    file="/dpu/src/main/java/org/openmhealth/dpu/process/exception/BusinessException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="547" y="469"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="org.openmhealth.dpu.process.exception.BaseException" project="dpu" 
+    file="/dpu/src/main/java/org/openmhealth/dpu/process/exception/BaseException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="709" y="628"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="org.openmhealth.dpu.process.exception.SystemException" project="dpu" 
+    file="/dpu/src/main/java/org/openmhealth/dpu/process/exception/SystemException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="886" y="469"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
   <dependency id="10">    
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="6"/>  
   </dependency>  
-  <dependency id="11">    
+  <realization id="11">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
+  </realization>  
+  <generalization id="12">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <dependency id="13">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="14">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="15">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <generalization id="16">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="17">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <dependency id="18">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="7"/>  
   </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    

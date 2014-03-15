@@ -1,12 +1,10 @@
 package org.openmhealth.dpu.process;
 
-import java.util.List;
-
-import org.openmhealth.dpu.process.exception.SystemException;
 import org.openmhealth.dpu.process.exception.BusinessException;
+import org.openmhealth.dpu.process.exception.SystemException;
 
 /**
- * DPU common interface
+ * DPU common interface, it declares the methods that all the DPUs have to implement.
  * 
  * @author Alberto Lagna
  *

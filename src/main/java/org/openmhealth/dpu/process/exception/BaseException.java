@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 /**
  * Base Exception for all the omh.dpu exceptions.
  * The subclasses need to contain the error dictionary, a group of static string:
- * - their name is the error code,
- * - their description will be used to create along with the args to create the real message 
+ * <ul><li>their name is the error code,</li>
+ * <li>their description will be used to create along with the args to create the real message</li></ul>
  * 
  * @author Alberto Lagna
  *

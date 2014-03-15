@@ -15,6 +15,10 @@ import org.springframework.stereotype.Service;
  * Data Process Unit that calculates the Blood Pressure Category, given the Systolic and
  * Distolic blood pressure.
  * 
+ * It is a DPU implementation. It is automatically registered to the DataProcessUnitController through a naming convention:
+ * <ul><li>every DPU must be in a subpackage of the DataProcessUnit package</li>
+ * <li>every DPU must be called <process name> + "DPU", where <process name> is the name of the process the DPU implements and that will be used in the REST service endpoint</li></ul>
+ * 
  * @see http://www.heart.org/HEARTORG/Conditions/HighBloodPressure/AboutHighBloodPressure/Understanding-Blood-Pressure-Readings_UCM_301764_Article.jsp
  * 
  * @author Alberto Lagna

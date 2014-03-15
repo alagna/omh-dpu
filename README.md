@@ -1,14 +1,28 @@
 # Open mHealth DPU (Data Process Unit) Implementation
 
-The Open mHealth engine has been developed with the support of DPU, following the [Scenario 1](https://github.com/openmhealth/developer/wiki/DPU-API-1.0-Beta#scenario-1)
  
 ## Table of Contents
 
+* Architecture of the solution
 * Process API Call
 * Registry API Call
 * Some example calls to the blood pressure calculator
 * Note on compiling the server with Maven
 * Next steps
+
+## Architecture of the solution
+The Open mHealth engine has been developed with the support of DPU, following the [Scenario 1](https://github.com/openmhealth/developer/wiki/DPU-API-1.0-Beta#scenario-1)
+
+The main classes are described in the following picture
+![architecure](https://dl.dropboxusercontent.com/u/908293/omh-dpu.jpg)
+
+* the DataProcessUnitController is the access point to the DPUs. It exposes a REST interface with the two DPU methods. Given the <process name> of the requests dynamically looks for DPUs and forwards the JSON call to them. It also logs requests and responses for better tracing and debugging. It catches the exceptions thrown by the engine and converts them into the proper error message and HTTP code.
+* the DataProcessUnit interface declares the methods that all the DPUs have to implement.
+* the DataProcessUnitBaseImpl is a base implementation for all the DPUs. It doesn't implement the DataProcessUnit interface but some utility methods used the DPUs.
+* the BloodPressureDPU is a DPU implementation that calculates the (Blood Pressure Category)[http://www.heart.org/HEARTORG/Conditions/HighBloodPressure/AboutHighBloodPressure/Understanding-Blood-Pressure-Readings_UCM_301764_Article.jsp], given the Systolic and Distolic blood pressure. It is automatically registered to the DataProcessUnitController through a naming convention:
+	* every DPU must be in a subpackage of the DataProcessUnit package 
+	* every DPU must be called <process name> + "DPU", where <process name> is the name of the process the DPU implements and that will be used in the REST service endpoint.
+* BusinessException and SystemException are the exceptions thrown by the whole engine. They have an associated error dictionary with the error code and relative messages.
 
 ## Process API Call
 
@@ -135,10 +149,6 @@ If in the next steps the [Concordia library](https://github.com/jojenki/Concordi
 
 
 ## Next Steps
-* write the documentation
-	* ppt presentation
-	* UML diagram
-	
 * BaseException: a possible extension could be to customize the status, depending on the error code
 
 
